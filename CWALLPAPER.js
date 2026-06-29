@@ -9,4 +9,4 @@ btn_live_walllpaper.addEventListener('click',() => {
     } else {
         alert("cari walpaper terlebih dahulu")
     }
-})
+});

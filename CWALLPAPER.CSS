@@ -119,13 +119,14 @@ body {
 .footer-box {
     height: 100px;
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     background-color: rgba(143, 143, 157, 0.3);
     justify-items: center;
     align-self: baseline;
     box-sizing: border-box;
+    flex-wrap: wrap;
 }
 .footer-left {
     display: flex;
@@ -152,6 +153,8 @@ body {
 .footer-button-database {
     border: none;
     width: 100px;
-    height: 30px;
+    height: 40px;
     border-radius: 40px;
 }
+
+/* media query */
