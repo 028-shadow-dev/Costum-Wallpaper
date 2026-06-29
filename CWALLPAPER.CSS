@@ -8,6 +8,7 @@ body {
     background-image: url('https://static.vecteezy.com/system/resources/thumbnails/017/188/879/small/geometric-dark-background-with-gradient-shapes-composition-good-for-posters-design-illustration-vector.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
 }
 /* navbar */
 .nav-box {
@@ -155,6 +156,9 @@ body {
     width: 100px;
     height: 40px;
     border-radius: 40px;
+}
+.database{
+    list-style: none;
 }
 
 /* media query */

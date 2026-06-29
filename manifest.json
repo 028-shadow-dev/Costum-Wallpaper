@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Custom Wallpaper",
+  "version": "1.0",
+  "description": "Menampilkan widget dan search bar buatan sendiri di tab baru.",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  }
+  
+}
