@@ -20,32 +20,51 @@ setting.addEventListener('click', () => {
 
 let keyNumbers = 0;
 btn_database.addEventListener('click', () => {
-    const linkSave = inputWallpaper.value;
+    const linkSave = inputWallpaper.value.trim();
+    if (!linkSave) {
+        alert("cari walpaper terlebih dahulu");
+        return;
+    }
+
     keyNumbers += 1;
     let newKey = `link_${keyNumbers}`;
     localStorage.setItem(newKey, linkSave);
     alert(`link sudah tersave sebagai no ${newKey}`);
-    return newKey;
+
+    // SALAH: kondisi sebelumnya memeriksa `keyNumbers != linkSave`.
+    // SEHARUSNYA: tidak perlu membandingkan angka dengan teks.
+    // Cukup pastikan input tidak kosong, lalu simpan.
 });
 
+let numberOFdatabase = "";
+search_database.addEventListener('click', () => {
+    let userInputWallpaper = prompt("pilih no brp wallpapermu");
+    let targetKey = `link_${userInputWallpaper}`; 
+    let savedWallpaperUrl = localStorage.getItem(targetKey);
 
-// search_database.addEventListener('click', (newKey) => {
-//     const database = localStorage.getItem(link_1);
-//     let searchDatabase = prompt("pilih no database:");
-//         if (searchDatabase == database) {
-//             document.body.style.backgroundImage = `url('${searchDatabase}')`;
-//         } else if (searchDatabase == 0) {
-//             document.body.style.backgroundImage = `url('${searchDatabase}')`;
-//         }
-// });
+    if (savedWallpaperUrl) {
+        localStorage.setItem("userWallpaper", targetKey);
+        document.body.style.backgroundImage = `url(${savedWallpaperUrl})`;
+    } else {
+        alert("Nomor wallpaper tidak ditemukan!");
+    }
+});
 
-let bgNoRefresh = localStorage.getItem('link_1');
+let activeKey = localStorage.getItem("userWallpaper"); 
+
+// SALAH: kode ini mengambil data dari localStorage dengan nama userWallpaper, padahal yang disimpan tadi adalah targetKey.
+// SEHARUSNYA: ambil nilai dari key yang sedang aktif, misalnya localStorage.getItem(activeKey).
+let bgNoRefresh = localStorage.getItem(activeKey);
 if (bgNoRefresh) {
     document.body.style.backgroundImage = `url('${bgNoRefresh}')`;
 }
 
 btn_live_walllpaper.addEventListener('click',() => {
-    let linkGambar = inputWallpaper.value;
+    let linkGambar = inputWallpaper.value.trim();
+
+    // SALAH: kalau input berisi spasi, tetap dianggap ada.
+    // SEHARUSNYA: pakai trim() supaya input kosong yang cuma spasi tidak diproses.
+    // Contoh yang benar: let linkGambar = inputWallpaper.value.trim();
     if (linkGambar) {
         document.body.style.backgroundImage = `url('${linkGambar}')`;
     } else {
@@ -67,14 +86,15 @@ function UpdateJam() {
     const day = date.getDate();
     const hour = date.getHours();
     const minute = date.getMinutes();
+    const ms = date.getSeconds();
 
     const htmlKonten = `
-        <h1>${hour}:${minute}</h1>
+        <h1>${hour}:${minute}:${ms}</h1>
         <h3>${year},${monthH[monthN]} ${day} </h3>
     `
 
 
     jam.innerHTML = htmlKonten;
 }
-
+setInterval(UpdateJam, 1000);
 UpdateJam();
