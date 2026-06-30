@@ -30,10 +30,6 @@ btn_database.addEventListener('click', () => {
     let newKey = `link_${keyNumbers}`;
     localStorage.setItem(newKey, linkSave);
     alert(`link sudah tersave sebagai no ${newKey}`);
-
-    // SALAH: kondisi sebelumnya memeriksa `keyNumbers != linkSave`.
-    // SEHARUSNYA: tidak perlu membandingkan angka dengan teks.
-    // Cukup pastikan input tidak kosong, lalu simpan.
 });
 
 let numberOFdatabase = "";
@@ -52,8 +48,6 @@ search_database.addEventListener('click', () => {
 
 let activeKey = localStorage.getItem("userWallpaper"); 
 
-// SALAH: kode ini mengambil data dari localStorage dengan nama userWallpaper, padahal yang disimpan tadi adalah targetKey.
-// SEHARUSNYA: ambil nilai dari key yang sedang aktif, misalnya localStorage.getItem(activeKey).
 let bgNoRefresh = localStorage.getItem(activeKey);
 if (bgNoRefresh) {
     document.body.style.backgroundImage = `url('${bgNoRefresh}')`;
@@ -62,9 +56,6 @@ if (bgNoRefresh) {
 btn_live_walllpaper.addEventListener('click',() => {
     let linkGambar = inputWallpaper.value.trim();
 
-    // SALAH: kalau input berisi spasi, tetap dianggap ada.
-    // SEHARUSNYA: pakai trim() supaya input kosong yang cuma spasi tidak diproses.
-    // Contoh yang benar: let linkGambar = inputWallpaper.value.trim();
     if (linkGambar) {
         document.body.style.backgroundImage = `url('${linkGambar}')`;
     } else {
@@ -89,7 +80,7 @@ function UpdateJam() {
     const ms = date.getSeconds();
 
     const htmlKonten = `
-        <h1>${hour}:${minute}:${ms}</h1>
+        <h1>${hour}:${minute}</h1>
         <h3>${year},${monthH[monthN]} ${day} </h3>
     `
 
