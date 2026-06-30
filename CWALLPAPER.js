@@ -1,41 +1,60 @@
 // link input
-let btn_live_walllpaper = document.querySelector('#submit-live-wallpaper'); 
-let inputWallpaper = document.getElementById('input-link');
+const btn_live_walllpaper = document.querySelector('#submit-live-wallpaper'); 
+const inputWallpaper = document.getElementById('input-link');
 // database
-let btn_database = document.querySelector('#database-button');
-let list_database = document.querySelector('#database');
+const btn_database = document.querySelector('#database-button');
+const list_database = document.querySelector('#database');
+// setting
+const setting = document.getElementById('setting');
 
-function menambahGambar() {
-    const gambar = inputWallpaper.value.trim();
-
-    if (gambar) {
-        buatGambarElement(gambar);
-        inputWallpaper.value = ' ';
+setting.addEventListener('click', () => { 
+    let visibleFooterSetting = document.getElementById('footerhide');
+    if (visibleFooterSetting.style.visibility === "hidden" || visibleFooterSetting.style.visibility === "") {
+        visibleFooterSetting.style.visibility = "visible";
     } else {
-        alert("please enter url");
+        visibleFooterSetting.style.visibility = "hidden";
     }
-}
-
-function  buatGambarElement(gambar) {
-    const listGambar = document.createElement('li');
-    const tagGambar = document.createElement('img'); 
-
-    tagGambar.src = gambar;                       
-    tagGambar.alt = "Wallpaper";                     
-    tagGambar.style.width = "100px";                 
-
-    listGambar.appendChild(tagGambar);               
-    list_database.appendChild(listGambar);           
-}
+});
 
 btn_live_walllpaper.addEventListener('click',() => {
-    let imageUrl = inputWallpaper.value;
-    if (imageUrl) {
-        document.body.style.backgroundImage = `url('${imageUrl}')`;
+    let linkGambar = inputWallpaper.value;
+    if (linkGambar) {
+        document.body.style.backgroundImage = `url('${linkGambar}')`;
+        return linkGambar;
     } else {
         alert("cari walpaper terlebih dahulu")
     }
 });
 
-btn_database.addEventListener('click', menambahGambar)
+let bgNoRefresh = localStorage.getItem('link');
+if (bgNoRefresh) {
+    document.body.style.backgroundImage = `url('${bgNoRefresh}')`;
+}
 
+btn_database.addEventListener('click', () => {
+    const linkSave = inputWallpaper.value;
+    localStorage.setItem('link', linkSave);
+})
+
+// Date (year, month, day, hour, minute, ms)
+function UpdateJam() {
+    const monthH = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']
+
+    const jam = document.getElementById('jam-sekarang');
+    const date = new Date();
+    const year = date.getFullYear();
+    const monthN = date.getMonth();
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+
+    const htmlKonten = `
+        <h1>${hour}:${minute}</h1>
+        <h3>${year}, ${monthH[monthN]} ${day} </h3>
+    `
+
+
+    jam.innerHTML = htmlKonten;
+}
+
+UpdateJam();
