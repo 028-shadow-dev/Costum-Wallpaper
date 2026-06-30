@@ -18,7 +18,7 @@ setting.addEventListener('click', () => {
     }
 });
 
-let keyNumbers = 0;
+let keyNumbers = 1;
 btn_database.addEventListener('click', () => {
     const linkSave = inputWallpaper.value.trim();
     if (!linkSave) {
@@ -83,8 +83,6 @@ function UpdateJam() {
         <h1>${hour}:${minute}</h1>
         <h3>${year},${monthH[monthN]} ${day} </h3>
     `
-
-
     jam.innerHTML = htmlKonten;
 }
 setInterval(UpdateJam, 1000);
