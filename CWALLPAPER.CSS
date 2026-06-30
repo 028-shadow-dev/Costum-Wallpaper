@@ -6,16 +6,16 @@ body {
     display: flex;
     flex-direction: column;
     background-image: url('');
-    /* background-repeat: ; */
+    background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    backdrop-filter: blur(1px);
+    /* backdrop-filter: blur(1px); */
 }
 /* navbar */
 .nav-box {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 10px;
 }
 .jam-box {
     display: flex;
