@@ -7,15 +7,51 @@ const list_database = document.querySelector('#database');
 const search_database = document.getElementById('search-database');
 // setting
 const setting = document.getElementById('setting');
+const footer_setting = document.getElementById('footer-setting');
+const setting_blur = document.getElementById('setting-blur');
+const setting_cover_fit = document.getElementById('setting-cover-fit');
 
 
 setting.addEventListener('click', () => { 
-    let visibleFooterSetting = document.getElementById('footerhide');
-    if (visibleFooterSetting.style.visibility === "hidden" || visibleFooterSetting.style.visibility === "") {
-        visibleFooterSetting.style.visibility = "visible";
+    let visibleSetting = document.getElementById('footerhide');
+    if (visibleSetting.style.visibility === "hidden" || visibleSetting.style.visibility === "") {
+        visibleSetting.style.visibility = "visible";
     } else {
-        visibleFooterSetting.style.visibility = "hidden";
+        visibleSetting.style.visibility = "hidden";
     }
+});
+
+footer_setting.addEventListener('click',() => {
+    let visibleFoterSetting = document.getElementById('setting-ui-list');
+    if (visibleFoterSetting.style.display === 'none'){
+        visibleFoterSetting.style.display = "flex";
+    } else {
+        visibleFoterSetting.style.display = "none";
+    }
+});
+
+setting_blur.addEventListener('click', () => {
+    let blur_body = document.getElementById('live-wallpaper');
+    if (blur_body.style.backdropFilter === "blur(1px)") {
+        blur_body.style.backdropFilter = "blur(0px)";
+        blur_body = "blur(0px)";
+    } else {
+        blur_body.style.backdropFilter = "blur(1px)";
+        blur_body = "blur(1px)";
+    }
+    localStorage.setItem("settingBlur", blur_body)
+});
+
+setting_cover_fit.addEventListener('click', () => {
+    let cover_fit = document.getElementById('live-wallpaper');
+    if (cover_fit.style.backgroundSize === "cover") {
+        cover_fit.style.backgroundSize = "contain";
+        cover_fit = "contain";
+    } else {
+        cover_fit.style.backgroundSize = "cover";
+        cover_fit = "cover";
+    }
+    localStorage.setItem("settingCover", cover_fit);
 });
 
 let keyNumbers = 1;
@@ -53,6 +89,16 @@ if (bgNoRefresh) {
     document.body.style.backgroundImage = `url('${bgNoRefresh}')`;
 }
 
+let blur_setting = localStorage.getItem("settingBlur");
+if (blur_setting) {
+    document.body.style.backdropFilter = blur_setting;
+}
+
+let cover_setting = localStorage.getItem("settingCover");
+if (cover_setting) {
+    document.body.style.backgroundSize = cover_setting;
+}
+
 btn_live_walllpaper.addEventListener('click',() => {
     let linkGambar = inputWallpaper.value.trim();
 
@@ -80,8 +126,10 @@ function UpdateJam() {
     const ms = date.getSeconds();
 
     const htmlKonten = `
-        <h1>${hour}:${minute}</h1>
-        <h3>${year},${monthH[monthN]} ${day} </h3>
+        <div style="display: flex; gap:5px">
+            <h1>${hour}:${minute}</h1><h4>${ms}</h4>
+        </div>
+        <h3 style="margin: 0; height">${year},${monthH[monthN]} ${day} </h3>
     `
     jam.innerHTML = htmlKonten;
 }

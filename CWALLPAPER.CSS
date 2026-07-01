@@ -9,7 +9,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    /* backdrop-filter: blur(1px); */
+    backdrop-filter: blur(1px);
 }
 /* navbar */
 .nav-box {
@@ -101,13 +101,34 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    justify-items: center;
-    align-self: baseline;
-    box-sizing: border-box;
-    flex-wrap: wrap;
+    flex-direction: row;
     margin-top: auto;
+    padding-bottom: 20px;
 }
-
+.footer-setting {
+  display: flex;      
+  flex-direction: column ; 
+  gap: 5px;                       
+  flex-shrink: 0;
+  align-self: center; 
+}
+.setting-ui {
+    border: none;
+    width: 100px;
+    height: 40px;
+    border-radius: 40px;
+}
+.setting-ul-list  {
+  display: none;
+  gap: 5px ;
+  list-style: none ;
+  margin: 0 ;
+  padding: 0    ;
+}
+.setting-li-list {
+    display: flex;
+    justify-content: flex-start;
+}
 .footer-left-search-database {
     display: flex;
     align-items: center;
