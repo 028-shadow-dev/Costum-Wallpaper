@@ -120,11 +120,11 @@ body {
 }
 .setting-ul-list  {
   display: none;
-  gap: 5px ;
-  list-style: none ;
-  margin: 0 ;
-  padding: 0    ;
-}
+  gap: 5px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}   
 .setting-li-list {
     display: flex;
     justify-content: flex-start;

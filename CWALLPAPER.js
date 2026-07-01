@@ -109,8 +109,6 @@ btn_live_walllpaper.addEventListener('click',() => {
     }
 });
 
-
-
 // Date (year, month, day, hour, minute, ms)
 function UpdateJam() {
     const monthH = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']
