@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    max-height: 100vh;
     overflow-y: hidden;
     overflow-x: hidden;
     display: flex;
@@ -211,3 +212,65 @@ body {
 
 
 /* media query */
+@media (max-width: 768px) {
+    body {
+        background-position: top center;
+    }
+
+    .nav-box {
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    .search-box {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        gap: 0.5rem;
+    }
+
+    .footer-button,
+    .footer-button-search-database,
+    .footer-button-database,
+    .setting-ui {
+        width: 100%;
+    }
+
+    .footerhide {
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+        padding-bottom: 1rem;
+    }
+
+    .footer-left,
+    .footer-midle,
+    .footer-right,
+    .footer-setting {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .footer-midle {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .footer-input {
+        width: 100%;
+    }
+
+    .shortcut-box {
+        padding: 0.75rem 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-bar {
+        min-width: 120px;
+    }
+
+    .footerhide {
+        padding: 0.5rem;
+    }
+}
