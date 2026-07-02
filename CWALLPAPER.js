@@ -63,7 +63,7 @@ btn_database.addEventListener('click', () => {
     const linkWallpapersave = JSON.parse(localStorage.getItem('linkWallpaper')) || [];
     const nomor = linkWallpapersave.length + 1;
     linkWallpapersave.push({nomor, linkSave});
-    localStorage.getItem('linkWallpaper', JSON.stringify(linkWallpapersave));
+    localStorage.setItem('linkWallpaper', JSON.stringify(linkWallpapersave));
     alert(`link sudah tersave sebagai nomor ${nomor}`);
 });
 
@@ -88,9 +88,8 @@ search_database.addEventListener('click', () => {
     }
 });
 
-let activeKey = localStorage.getItem("activeWallpaper"); 
 
-let bgNoRefresh = localStorage.getItem(activeKey);
+let bgNoRefresh = localStorage.getItem('activeWallpaper');
 if (bgNoRefresh) {
     document.body.style.backgroundImage = `url('${bgNoRefresh}')`;
 }
