@@ -18,7 +18,7 @@ setting.addEventListener('click', () => {
         visibleSetting.style.visibility = "visible";
     } else {
         visibleSetting.style.visibility = "hidden";
-    }
+    }4
 });
 
 footer_setting.addEventListener('click',() => {
@@ -54,35 +54,41 @@ setting_cover_fit.addEventListener('click', () => {
     localStorage.setItem("settingCover", cover_fit);
 });
 
-let keyNumbers = 1;
 btn_database.addEventListener('click', () => {
     const linkSave = inputWallpaper.value.trim();
     if (!linkSave) {
         alert("cari walpaper terlebih dahulu");
         return;
     }
-
-    keyNumbers += 1;
-    let newKey = `link_${keyNumbers}`;
-    localStorage.setItem(newKey, linkSave);
-    alert(`link sudah tersave sebagai no ${newKey}`);
+    const linkWallpapersave = JSON.parse(localStorage.getItem('linkWallpaper')) || [];
+    const nomor = linkWallpapersave.length + 1;
+    linkWallpapersave.push({nomor, linkSave});
+    localStorage.getItem('linkWallpaper', JSON.stringify(linkWallpapersave));
+    alert(`link sudah tersave sebagai nomor ${nomor}`);
 });
 
-let numberOFdatabase = "";
 search_database.addEventListener('click', () => {
     let userInputWallpaper = prompt("pilih no brp wallpapermu");
-    let targetKey = `link_${userInputWallpaper}`; 
-    let savedWallpaperUrl = localStorage.getItem(targetKey);
-
-    if (savedWallpaperUrl) {
-        localStorage.setItem("userWallpaper", targetKey);
-        document.body.style.backgroundImage = `url(${savedWallpaperUrl})`;
+    let savedWallpaperUrl = JSON.parse(localStorage.getItem('linkWallpaper'));
+    if(savedWallpaperUrl){
+        let searchFInd = savedWallpaperUrl.find(item => item.nomor == userInputWallpaper);
+        if (searchFInd) {
+            let urlWallpaper = searchFInd.linkSave;
+            
+            // Pasang sebagai background body
+            document.body.style.backgroundImage = `url('${urlWallpaper}')`;
+            
+            // Simpan URL yang sedang aktif ini agar tidak hilang saat di-refresh
+            localStorage.setItem('activeWallpaper', urlWallpaper);
+        } else {
+            alert(`Nomor ${userInputWallpaper} tidak ditemukan!`);
+        }
     } else {
-        alert("Nomor wallpaper tidak ditemukan!");
+        alert("Belum ada wallpaper yang tersimpan di database!");
     }
 });
 
-let activeKey = localStorage.getItem("userWallpaper"); 
+let activeKey = localStorage.getItem("activeWallpaper"); 
 
 let bgNoRefresh = localStorage.getItem(activeKey);
 if (bgNoRefresh) {
@@ -109,6 +115,31 @@ btn_live_walllpaper.addEventListener('click',() => {
     }
 });
 
+function addShortcut() {
+  const name = prompt("masukan nama web mu");
+  let url = prompt("masukan urlnya");
+  
+  if(!url.startsWith('http')) url = 'https://' + url; 
+  const shortcuts = JSON.parse(localStorage.getItem('myShortcuts')) || [];
+  shortcuts.push({ name, url });
+  localStorage.setItem('myShortcuts', JSON.stringify(shortcuts));
+  
+  displayShortcuts();
+}
+
+function displayShortcuts() {
+  const container = document.getElementById('shortcutlist');
+  container.innerHTML = '';
+  const shortcuts = JSON.parse(localStorage.getItem('myShortcuts')) || [];
+  
+  shortcuts.forEach(item => {
+    container.innerHTML += `
+    <br>
+    <a href="${item.url}" target="_blank" style="margin:0; display:inline-block;text-decoration: none; color: black; border: 1px solid black; width: fit-content; padding: 0.7rem; background: white;">${item.name}</a>
+    `;
+  });
+}
+
 // Date (year, month, day, hour, minute, ms)
 function UpdateJam() {
     const monthH = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']
@@ -133,3 +164,4 @@ function UpdateJam() {
 }
 setInterval(UpdateJam, 1000);
 UpdateJam();
+displayShortcuts();

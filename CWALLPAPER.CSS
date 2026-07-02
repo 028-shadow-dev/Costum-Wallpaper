@@ -9,6 +9,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    /* background: rgba(41, 128, 185, 0.3); Transparent blue for water tint */
     backdrop-filter: blur(1px);
 }
 /* navbar */
@@ -83,6 +84,26 @@ body {
     border: 1px solid black;
     box-sizing: border-box;
     box-shadow: -3px 1.5px 0px black;
+}
+/* shortcut */
+.shortcut-box {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    /* background-color: rgba(162, 159, 159, 0.216); */
+}
+.shortcut-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.shortcut {
+    color: rgb(0, 0, 0);
+    border: 1px solid black;
+    width: 3rem;
+    height: 3rem;
+    padding: 0.7rem;
+    background: white;
 }
 
 /* footer */
