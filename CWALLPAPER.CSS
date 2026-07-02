@@ -229,36 +229,19 @@ body {
         gap: 0.5rem;
     }
 
-    .footer-button,
-    .footer-button-search-database,
-    .footer-button-database,
-    .setting-ui {
-        width: 100%;
-    }
-
     .footerhide {
-        flex-direction: column;
-        align-items: stretch;
+        /* flex-direction: column; */
+        flex-wrap: wrap;
+        width: 100%;
         height: auto;
         padding-bottom: 1rem;
     }
-
-    .footer-left,
-    .footer-midle,
-    .footer-right,
-    .footer-setting {
-        width: 100%;
-        justify-content: center;
-    }
-
+    
     .footer-midle {
         flex-wrap: wrap;
         gap: 0.5rem;
     }
 
-    .footer-input {
-        width: 100%;
-    }
 
     .shortcut-box {
         padding: 0.75rem 0.5rem;
