@@ -13,6 +13,10 @@ const setting_cover_fit = document.getElementById('setting-cover-fit');
 //shortcut
 const shortcutlist = document.getElementById('shortcutlist');
 
+let bgNoRefresh = localStorage.getItem('activeWallpaper');
+if (bgNoRefresh) {
+    document.body.style.backgroundImage = `url('${bgNoRefresh}')`;
+}
 
 setting.addEventListener('click', () => { 
     let visibleSetting = document.getElementById('footerhide');
@@ -89,12 +93,6 @@ search_database.addEventListener('click', () => {
         alert("Belum ada wallpaper yang tersimpan di database!");
     }
 });
-
-
-let bgNoRefresh = localStorage.getItem('activeWallpaper');
-if (bgNoRefresh) {
-    document.body.style.backgroundImage = `url('${bgNoRefresh}')`;
-}
 
 let blur_setting = localStorage.getItem("settingBlur");
 if (blur_setting) {
