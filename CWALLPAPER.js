@@ -10,6 +10,8 @@ const setting = document.getElementById('setting');
 const footer_setting = document.getElementById('footer-setting');
 const setting_blur = document.getElementById('setting-blur');
 const setting_cover_fit = document.getElementById('setting-cover-fit');
+//shortcut
+const shortcutlist = document.getElementById('shortcutlist');
 
 
 setting.addEventListener('click', () => { 
@@ -115,31 +117,60 @@ btn_live_walllpaper.addEventListener('click',() => {
 });
 
 function addShortcut() {
-  const name = prompt("masukan nama web mu");
-  let url = prompt("masukan urlnya");
-  
-  if(!url.startsWith('http')) url = 'https://' + url; 
-  const shortcuts = JSON.parse(localStorage.getItem('myShortcuts')) || [];
-  shortcuts.push({ name, url });
-  localStorage.setItem('myShortcuts', JSON.stringify(shortcuts));
-  
-  displayShortcuts();
+    let name;
+    let url;
+    while (true) {
+        name = prompt("Masukkan nama shortcut");
+        if (name === null) return; 
+        url = prompt("masukan urlnya");
+        if (url === null) return; 
+        if(name.trim() === "") {
+            alert("Nama tidak boleh kosong!");
+        }
+        if(url.trim() === "") {
+            alert("url tidak boleh kosong!");
+        }
+        break;
+    }
+    
+    if(!url.startsWith('http')) url = 'https://' + url; 
+    const shortcuts = JSON.parse(localStorage.getItem('myShortcuts')) || [];
+    shortcuts.push({ name, url });
+    localStorage.setItem('myShortcuts', JSON.stringify(shortcuts));
+    displayShortcuts();
 }
 
 function displayShortcuts() {
-  const container = document.getElementById('shortcutlist');
-  container.innerHTML = '';
-  const shortcuts = JSON.parse(localStorage.getItem('myShortcuts')) || [];
-  
-  shortcuts.forEach(item => {
-    container.innerHTML += `
-    <br>
-    <a href="${item.url}" target="_blank" style="margin:0; display:inline-block;text-decoration: none; color: black; border: 1px solid black; width: fit-content; padding: 0.7rem; background: white;">${item.name}</a>
-    `;
-  });
+    const container = document.getElementById('shortcutlist');
+    container.innerHTML = '';
+    const shortcuts = JSON.parse(localStorage.getItem('myShortcuts')) || [];
+
+    shortcuts.forEach((item, index) => {
+        container.innerHTML += `
+        <br>
+        <!-- Ubah id menjadi class agar tidak duplikat -->
+        <div class="shortcut-item" style="border-radius: 10px; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: black; border: 1px solid black; background: white; padding: 0.5rem;">
+            <a id="shortcut-link-${index}" href="${item.url}" target="_blank" rel="noopener noreferrer" style="margin: 0; padding: 0.5rem; color: black; text-decoration: none;">${item.name}</a>
+            
+            <!-- Kirim item.name langsung ke dalam fungsi editshortcut -->
+            <button onclick="editshortcut('${item.name}')" type="button" style="padding: 0.3rem 0.5rem;">Hapus</button>
+        </div>
+        `;
+    });
+
 }
 
-// Date (year, month, day, hour, minute, ms)
+function editshortcut(name) {
+    const yakin = confirm(`Apakah Anda yakin ingin menghapus shortcut "${name}"?`);
+    if (!name) return alert("Nama tidak boleh kosong!");
+    const indexShortcut = JSON.parse(localStorage.getItem('myShortcuts')) || [];
+
+    let dataBaru = indexShortcut.filter(user => user.name.toLowerCase() !== name.toLowerCase());
+    localStorage.setItem("myShortcuts", JSON.stringify(dataBaru));
+
+    location.reload(); 
+}
+
 function UpdateJam() {
     const monthH = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']
 
@@ -161,6 +192,7 @@ function UpdateJam() {
     `
     jam.innerHTML = htmlKonten;
 }
+
 setInterval(UpdateJam, 1000);
 UpdateJam();
 displayShortcuts();
