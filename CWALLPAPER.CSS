@@ -251,7 +251,9 @@ body {
         gap: 5px;
         flex-wrap: wrap;
     }
-
+    .setting-ul-list {
+        display: none;
+    }
     .footerhide {
         /* flex-direction: column; */
         /* flex-wrap: wrap; */
@@ -262,7 +264,6 @@ body {
     }
 
     .footer-midle {
-        order: 3;
         width: 100%;
     }
 }
@@ -276,13 +277,70 @@ body {
     .search-box {
         border-radius: 24px;
     }
-
     .shortcut {
         width: 2.7rem;
         height: 2.7rem;
     }
 
-    .footerhide {
-        padding: 0.5rem;
+    /* Kontainer Utama Footer */
+    #footerhide {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;           
+        justify-content: space-between; 
+        align-items: center;
+        width: 100%;                 
+        box-sizing: border-box;      
+        padding: 4px 6px;           /* Super ketat agar hemat ruang */
+        gap: 4px;
+        overflow: hidden;            
+    }
+
+    /* Membungkus semua anak div utama */
+    .footer-setting {
+        display: flex;      
+        flex-direction: column ; 
+        gap: 5px;                       
+        flex-shrink: 0;
+        align-self: center; 
+    }
+    .footer-left, 
+    .footer-midle, 
+    .footer-right {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-shrink: 1;              
+        min-width: 0;               /* Paksa block pembungkus bisa mengecil maksimal */
+        gap: 3px;                    
+    }
+
+    /* Bagian Input teks (Middle) */
+    .footer-midle {
+        flex-grow: 2;               /* Beri prioritas ruang lebih besar untuk input link */
+        min-width: 0;                
+    }
+
+    .footer-input {
+        width: 100%;                 
+        min-width: 60px;             
+        padding: 4px;
+        font-size: 10px;             
+    }
+
+    /* Perbaikan CSS Tombol & Fix Koma Error */
+    .footer-button, 
+    .footer-button-search-database, 
+    .footer-button-database,
+    .setting-ui {                    /* Koma error sebelum kurung kurawal sudah dihapus */
+        font-size: 9px;              /* Perkecil font untuk layar mobile */
+        padding: 4px 6px;            
+        white-space: nowrap;         
+        letter-spacing: -0.2px;      /* Merapatkan huruf sedikit agar muat */
+    }
+
+    /* Mengatur list (UL) setting agar tetap sembunyi */
+    .setting-ul-list {
+        display: none;
     }
 }
