@@ -254,6 +254,9 @@ body {
     .setting-ul-list {
         display: none;
     }
+    .footer-box {
+        margin-top: auto;
+    }
     .footerhide {
         /* flex-direction: column; */
         /* flex-wrap: wrap; */
@@ -281,7 +284,9 @@ body {
         width: 2.7rem;
         height: 2.7rem;
     }
-
+    .footer-box {
+        margin-top: auto;
+    }
     /* Kontainer Utama Footer */
     #footerhide {
         display: flex;
@@ -296,13 +301,11 @@ body {
         overflow: hidden;            
     }
 
-    /* Membungkus semua anak div utama */
     .footer-setting {
         display: flex;      
         flex-direction: column ; 
         gap: 5px;                       
-        flex-shrink: 0;
-        align-self: center; 
+        /* align-self: center;  */
     }
     .footer-left, 
     .footer-midle, 
