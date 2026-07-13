@@ -137,6 +137,7 @@ body {
   align-self: center; 
 }
 .setting-ui {
+    display:none;
     border: none;
     width: 100px;
     height: 40px;
