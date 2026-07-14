@@ -137,14 +137,14 @@ body {
   align-self: center; 
 }
 .setting-ui {
-    display:none;
+    /* display:none; */
     border: none;
     width: 100px;
     height: 40px;
     border-radius: 40px;
 }
 .setting-ul-list  {
-  /* display: none; */
+  display: none;
   gap: 5px;
   list-style: none;
   margin: 0;
