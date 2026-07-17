@@ -121,7 +121,7 @@ body {
 .footerhide {
     height: 100px;
     width: 100%;
-    visibility: hidden;
+    /* visibility: hidden; */
     display: flex;
     justify-content: space-around;
     align-items: center;
