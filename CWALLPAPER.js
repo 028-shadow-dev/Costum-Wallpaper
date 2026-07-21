@@ -12,11 +12,68 @@ const setting_blur = document.getElementById('setting-blur');
 const setting_cover_fit = document.getElementById('setting-cover-fit');
 //shortcut
 const shortcutlist = document.getElementById('shortcutlist');
+//list
+const ToDoList = document.getElementById('todo-button');
 
 let bgNoRefresh = localStorage.getItem('activeWallpaper');
 if (bgNoRefresh) {
     document.body.style.backgroundImage = `url('${bgNoRefresh}')`;
 }
+
+function addJob (){
+    let pekerjaan = prompt("masukan pekerjaan yg akan di selesaikan");
+    // console.log(pekerjaan);
+    if (!pekerjaan) {
+        alert("tolong isi");
+        return;
+    }
+    let selesai = false;
+    let listPekerjaan = JSON.parse(localStorage.getItem('MytoDoList')) || [];
+    let nomer = listPekerjaan.length + 1;
+    listPekerjaan.push({nomer, pekerjaan, selesai});
+    localStorage.setItem('MytoDoList', JSON.stringify(listPekerjaan));
+    displayToDoList();
+}
+
+function displayToDoList(){
+    // display todolist
+    const toDoList = document.getElementById('list-pekerjaan');
+    toDoList.innerHTML = '';
+    let listPekerjaan = JSON.parse(localStorage.getItem('MytoDoList')) || [];
+    listPekerjaan.forEach((item, index) => {
+        const styleStrike = item.selesai ? 'text-decoration: line-through;' : 'text-decoration: none;';
+        toDoList.innerHTML += `
+            <li class="liToDoList" id="liToDoList${item.nomer}" style="color: black;text-shadow: none; ${styleStrike} list-style:x;">${item.pekerjaan} <button onclick="selesaiPekerjaan(${item.nomer}, ${item.selesai})">selesai</button>  </li>
+        `
+    });
+}
+
+function selesaiPekerjaan(nomer, selesai){
+    if (!nomer) {
+        return alert("nomor tidak ada");
+    }
+    
+    let selesaiPekerjaanli = document.getElementById(`liToDoList${nomer}`);
+    let sdhselesai = JSON.parse(localStorage.getItem('MytoDoList')) || [];
+
+    if (!selesai) {
+        selesaiPekerjaanli.style.textDecoration = "line-through";
+        let itemIndex = sdhselesai.findIndex(item => item.nomer === nomer);
+        if (itemIndex !== -1) {
+            sdhselesai[itemIndex].selesai = true;
+        }
+        localStorage.setItem('MytoDoList', JSON.stringify(sdhselesai));
+    }
+}
+
+ToDoList.addEventListener('click', () => {
+    let visibleToDoList = document.getElementById('list-pekerjaan');
+    if (visibleToDoList.style.visibility === "hidden") {
+        visibleToDoList.style.visibility = "visible";
+    } else {
+        visibleToDoList.style.visibility = "hidden";
+    }
+})
 
 setting.addEventListener('click', () => { 
     let visibleSetting = document.getElementById('footerhide');
@@ -24,7 +81,7 @@ setting.addEventListener('click', () => {
         visibleSetting.style.visibility = "visible";
     } else {
         visibleSetting.style.visibility = "hidden";
-    }4
+    }
 });
 
 footer_setting.addEventListener('click',() => {
@@ -194,3 +251,4 @@ function UpdateJam() {
 setInterval(UpdateJam, 1000);
 UpdateJam();
 displayShortcuts();
+displayToDoList();
