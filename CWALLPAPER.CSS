@@ -48,6 +48,7 @@ body {
     border: 1px solid black;
     height: fit-content;
     visibility: hidden;
+    width: 15vw;
 }
 
 .todo-button {
