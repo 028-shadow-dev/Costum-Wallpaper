@@ -228,7 +228,7 @@ function displayShortcuts() {
         container.innerHTML += `
         <br>
         <!-- Ubah id menjadi class agar tidak duplikat -->
-        <div class="shortcut-item" style="border-radius: 10px; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: black; border: 1px solid black; background: white; padding: 0.5rem; flex-wrap: wrap">
+        <div class="shortcut-item" style="border-radius: 10px; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: black; border: 1px solid black; background: white; padding: 0.5rem;">
             <a id="shortcut-link-${index}" href="${item.url}" target="_blank" rel="noopener noreferrer" style="margin: 0; padding: 0.5rem; color: black; text-decoration: none;">${item.name}</a>
             
             <!-- Kirim item.name langsung ke dalam fungsi editshortcut -->

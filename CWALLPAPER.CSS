@@ -123,6 +123,12 @@ body {
     box-shadow: -3px 1.5px 0px black;
 }
 /* shortcut */
+#shortcutlist {
+    display: flex;
+    flex-wrap:  wrap-reverse;
+    flex-direction: column;
+    height: 35vh;
+}
 .shortcut-box {
     display: flex;
     justify-content: flex-end;
