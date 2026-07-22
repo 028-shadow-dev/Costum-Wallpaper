@@ -14,6 +14,11 @@ const setting_cover_fit = document.getElementById('setting-cover-fit');
 const shortcutlist = document.getElementById('shortcutlist');
 //list
 const ToDoList = document.getElementById('todo-button');
+// mode color
+const btn_modecolor = document.getElementById('toggle-btn');
+
+
+
 
 let bgNoRefresh = localStorage.getItem('activeWallpaper');
 if (bgNoRefresh) {
@@ -65,6 +70,25 @@ function selesaiPekerjaan(nomer, selesai){
         localStorage.setItem('MytoDoList', JSON.stringify(sdhselesai));
     }
 }
+
+btn_modecolor.addEventListener('click', () => {
+    let lightMode = document.getElementById('live-wallpaper');
+    let lightModeJam = document.getElementById('jam-sekarang');
+    let ToDoList = document.getElementById('todo-button');
+    if (lightMode.style.color === 'var(--warna-teks-1)') {
+        lightMode.style.color = 'var(--warna-teks-2)';
+        lightMode.style.backgroundColor = 'var(--warna-teks-2)';
+        lightModeJam.style.color = 'var(--warna-teks-1)';
+        ToDoList.style.color = 'var(--warna-teks-1)';
+    } else {
+        lightMode.style.color = 'var(--warna-teks-1)';
+        lightMode.style.backgroundColor = 'var(--warna-teks-1)';
+        lightModeJam.style.color = 'var(--warna-teks-2)';
+        ToDoList.style.color = 'var(--warna-teks-2)';
+    }
+})
+
+
 
 ToDoList.addEventListener('click', () => {
     let visibleToDoList = document.getElementById('list-pekerjaan');

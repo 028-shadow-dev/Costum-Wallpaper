@@ -1,3 +1,10 @@
+:root {
+    --warna-latar-1: black;
+    --warna-teks-1: white;
+    --warna-latar-2: white;
+    --warna-teks-2: black;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -12,6 +19,8 @@ body {
     background-position: center;
     /* background: rgba(41, 128, 185, 0.3); Transparent blue for water tint */
     backdrop-filter: blur(1px);
+    color: var(--warna-teks-1);
+    background-color: var(--warna-latar-1);
 }
 
 /* navbar */
@@ -28,7 +37,7 @@ body {
     gap: 1rem;
     flex-direction: column;
     text-shadow: 0 0 10px rgba(10, 10, 10, 0.5); 
-    color: white;
+    color: var(--warna-teks-1);
     font-family: "Courier New", Courier, monospace;
     font-weight: 800;
     font-size: large;
@@ -46,6 +55,15 @@ body {
     border: 0px;
     color: white;
     font-size: medium;
+}
+
+.toggle-button-mode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
 }
 
 .search-box {
