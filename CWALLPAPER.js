@@ -212,6 +212,7 @@ function addShortcut() {
         break;
     }
     
+    
     if(!url.startsWith('http')) url = 'https://' + url; 
     const shortcuts = JSON.parse(localStorage.getItem('myShortcuts')) || [];
     shortcuts.push({ name, url });
