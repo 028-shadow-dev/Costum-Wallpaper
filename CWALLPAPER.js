@@ -16,8 +16,12 @@ const shortcutlist = document.getElementById('shortcutlist');
 const ToDoList = document.getElementById('todo-button');
 // mode color
 const btn_modecolor = document.getElementById('toggle-btn');
-
-
+// local image input
+const inputLocalImage = document.getElementById('input-local-image');
+// vidio bg
+const videoSource = document.getElementById('videoSource');
+const videoInput = document.getElementById('videoInput');
+const videoPlayer = document.getElementById('myVideo');
 
 
 let bgNoRefresh = localStorage.getItem('activeWallpaper');
@@ -140,7 +144,21 @@ setting_cover_fit.addEventListener('click', () => {
 });
 
 btn_database.addEventListener('click', () => {
-    const linkSave = inputWallpaper.value.trim();
+    const file = inputLocalImage && inputLocalImage.files && inputLocalImage.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const dataUrl = e.target.result;
+            const linkWallpapersave = JSON.parse(localStorage.getItem('linkWallpaper')) || [];
+            const nomor = linkWallpapersave.length + 1;
+            linkWallpapersave.push({nomor, linkSave: dataUrl, local: true});
+            localStorage.setItem('linkWallpaper', JSON.stringify(linkWallpapersave));
+            alert(`Wallpaper lokal sudah tersave sebagai nomor ${nomor}`);
+        };
+        reader.readAsDataURL(file);
+        return;
+    }
+    let linkSave = inputWallpaper.value.trim();
     if (!linkSave) {
         alert("cari walpaper terlebih dahulu");
         return;
@@ -185,12 +203,24 @@ if (cover_setting) {
 
 btn_live_walllpaper.addEventListener('click',() => {
     let linkGambar = inputWallpaper.value.trim();
-
-    if (linkGambar) {
-        document.body.style.backgroundImage = `url('${linkGambar}')`;
-    } else {
-        alert("cari walpaper terlebih dahulu")
-    }
+    let fileImageLocal = inputLocalImage && inputLocalImage.files && inputLocalImage.files[0];
+    if(fileImageLocal){
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const dataUrl = e.target.result;
+            if (linkGambar || dataUrl) {
+                if (linkGambar) {
+                    document.body.style.backgroundImage = `url('${linkGambar}')`;
+                } else {
+                    document.body.style.backgroundImage = `url('${dataUrl}')`;
+                }
+            } else {
+                alert("cari walpaper terlebih dahulu")
+            }
+        }
+        reader.readAsDataURL(fileImageLocal);
+        return;
+    }   
 });
 
 function addShortcut() {
@@ -272,6 +302,19 @@ function UpdateJam() {
     `
     jam.innerHTML = htmlKonten;
 }
+
+videoInput.addEventListener('change', function() {
+    const file = this.files[0]; // Ambil file pertama
+    
+    if (file) {
+    const fileURL = URL.createObjectURL(file); // Buat URL sementara
+    
+    videoSource.src = fileURL;   // Ubah src video
+    videoPlayer.style.display = "block"; // Tampilkan video player
+    videoPlayer.load();          // Muat ulang video
+    videoPlayer.play();          // Putar otomatis
+    }
+});
 
 setInterval(UpdateJam, 1000);
 UpdateJam();

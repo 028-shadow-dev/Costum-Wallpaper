@@ -28,6 +28,9 @@
             </form>
         </nav>
         <div class="shortcut-box">
+            <video id="myVideo" autoplay loop muted playsinline>
+                <source id="videoSource" src="">
+            </video>
             <div class="shortcut-container">
                 <button onclick="addShortcut()" class="shortcut">+</button>
                 <div id="shortcutlist"></div>
@@ -42,7 +45,7 @@
                     <ul class="setting-ul-list" id="setting-ui-list">
                         <li class="setting-li-list"><button id="setting-blur">blur</button></li>
                         <li class="setting-li-list"><button id="setting-cover-fit">cover/fit</button></li>
-                        <li class="setting-li-list"><button>3</button></li>
+                        <li class="setting-li-list"><button id="setting-cover-fit">IMG/VID</button></li>
                     </ul>
                     <button class="setting-ui" id="footer-setting">setting ui</button>
                 </div>
@@ -50,6 +53,10 @@
                     <button class="footer-button-search-database" id="search-database">Search</button>
                 </div>
                 <div class="footer-midle">
+                    <div class="footer-input-container">
+                        <input type="file" accept="image/*" id="input-local-image" >
+                        <input type="file" id="videoInput" class="upload-btn" accept="video/*">
+                    </div>
                     <input type="text" class="footer-input" placeholder="link" id="input-link">
                     <button class="footer-button" id="submit-live-wallpaper">Submit</button>
                 </div>
@@ -60,6 +67,7 @@
                 </div>
             </div>
         </footer>
+
     <script src="CWALLPAPER.js?v=3"></script>
 </body>
 </html>
