@@ -25,8 +25,27 @@ const videoPlayer = document.getElementById('myVideo');
 
 
 let bgNoRefresh = localStorage.getItem('activeWallpaper');
+let bgNoRefreshType = localStorage.getItem('activeWallpaperType') || 'image';
+function setVideoSourceUrl(url) {
+    document.body.style.backgroundImage = 'none';
+    videoPlayer.style.display = 'block';
+    videoPlayer.pause();
+    videoSource.src = url;
+    videoPlayer.load();
+    videoPlayer.onloadeddata = () => {
+        const playPromise = videoPlayer.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+            playPromise.catch(() => {});
+        }
+    };
+}
 if (bgNoRefresh) {
-    document.body.style.backgroundImage = `url('${bgNoRefresh}')`;
+    if (bgNoRefreshType === 'video') {
+        setVideoSourceUrl(bgNoRefresh);
+    } else {
+        videoPlayer.style.display = 'none';
+        document.body.style.backgroundImage = `url('${bgNoRefresh}')`;
+    }
 }
 
 function addJob (){
@@ -144,20 +163,51 @@ setting_cover_fit.addEventListener('click', () => {
 });
 
 btn_database.addEventListener('click', () => {
-    const file = inputLocalImage && inputLocalImage.files && inputLocalImage.files[0];
-    if (file) {
+    const fileimage = inputLocalImage && inputLocalImage.files && inputLocalImage.files[0];
+    const filevideo = videoInput && videoInput.files && videoInput.files[0];
+    if (fileimage) {
         const reader = new FileReader();
         reader.onload = function(e) {
             const dataUrl = e.target.result;
             const linkWallpapersave = JSON.parse(localStorage.getItem('linkWallpaper')) || [];
             const nomor = linkWallpapersave.length + 1;
             linkWallpapersave.push({nomor, linkSave: dataUrl, local: true});
-            localStorage.setItem('linkWallpaper', JSON.stringify(linkWallpapersave));
-            alert(`Wallpaper lokal sudah tersave sebagai nomor ${nomor}`);
+            try {
+                localStorage.setItem('linkWallpaper', JSON.stringify(linkWallpapersave));
+                alert(`Wallpaper lokal sudah tersave sebagai nomor ${nomor}`);
+            } catch (err) {
+                console.error(err);
+                alert('Gagal menyimpan wallpaper. Ruang penyimpanan browser penuh.');
+            }
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(fileimage);
         return;
     }
+
+    if (filevideo) {
+        if (filevideo.size > 1.5 * 1024 * 1024) {
+            alert('Video terlalu besar untuk disimpan di localStorage. Pilih file yang lebih kecil atau gunakan URL.');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const dataUrl = e.target.result;
+            const linkWallpapersave = JSON.parse(localStorage.getItem('linkWallpaper')) || [];
+            const nomor = linkWallpapersave.length + 1;
+            linkWallpapersave.push({nomor, linkSave: dataUrl, local: true, type: 'video'});
+            try {
+                localStorage.setItem('linkWallpaper', JSON.stringify(linkWallpapersave));
+                alert(`Wallpaper video sudah tersave sebagai nomor ${nomor}`);
+            } catch (err) {
+                console.error(err);
+                alert('Gagal menyimpan video. Ruang penyimpanan browser penuh atau file terlalu besar.');
+            }
+        };
+        reader.readAsDataURL(filevideo);
+        return;
+    }
+
     let linkSave = inputWallpaper.value.trim();
     if (!linkSave) {
         alert("cari walpaper terlebih dahulu");
@@ -173,16 +223,20 @@ btn_database.addEventListener('click', () => {
 search_database.addEventListener('click', () => {
     let userInputWallpaper = prompt("pilih no brp wallpapermu");
     let savedWallpaperUrl = JSON.parse(localStorage.getItem('linkWallpaper'));
-    if(savedWallpaperUrl){
+    if (savedWallpaperUrl) {
         let searchFInd = savedWallpaperUrl.find(item => item.nomor == userInputWallpaper);
         if (searchFInd) {
             let urlWallpaper = searchFInd.linkSave;
-            
-            // Pasang sebagai background body
-            document.body.style.backgroundImage = `url('${urlWallpaper}')`;
-            
-            // Simpan URL yang sedang aktif ini agar tidak hilang saat di-refresh
-            localStorage.setItem('activeWallpaper', urlWallpaper);
+            if (searchFInd.type === 'video') {
+                setVideoSourceUrl(urlWallpaper);
+                localStorage.setItem('activeWallpaper', urlWallpaper);
+                localStorage.setItem('activeWallpaperType', 'video');
+            } else {
+                document.body.style.backgroundImage = `url('${urlWallpaper}')`;
+                videoPlayer.style.display = 'none';
+                localStorage.setItem('activeWallpaper', urlWallpaper);
+                localStorage.setItem('activeWallpaperType', 'image');
+            }
         } else {
             alert(`Nomor ${userInputWallpaper} tidak ditemukan!`);
         }
@@ -204,7 +258,15 @@ if (cover_setting) {
 btn_live_walllpaper.addEventListener('click',() => {
     let linkGambar = inputWallpaper.value.trim();
     let fileImageLocal = inputLocalImage && inputLocalImage.files && inputLocalImage.files[0];
-    if(fileImageLocal){
+    let filevideo = videoInput && videoInput.files && videoInput.files[0];
+
+    if (filevideo) {
+        const fileURL = URL.createObjectURL(filevideo);
+        setVideoSourceUrl(fileURL);
+        return;
+    }
+
+    if (fileImageLocal) {
         const reader = new FileReader();
         reader.onload = function(e) {
             const dataUrl = e.target.result;
@@ -220,7 +282,13 @@ btn_live_walllpaper.addEventListener('click',() => {
         }
         reader.readAsDataURL(fileImageLocal);
         return;
-    }   
+    }
+
+    if (linkGambar) {
+        document.body.style.backgroundImage = `url('${linkGambar}')`;
+    } else {
+        alert("cari walpaper terlebih dahulu")
+    }
 });
 
 function addShortcut() {
@@ -304,15 +372,12 @@ function UpdateJam() {
 }
 
 videoInput.addEventListener('change', function() {
-    const file = this.files[0]; // Ambil file pertama
-    
+    let bg_vid = document.getElementById('live-wallpaper');
+    const file = videoInput.files[0];
     if (file) {
-    const fileURL = URL.createObjectURL(file); // Buat URL sementara
-    
-    videoSource.src = fileURL;   // Ubah src video
-    videoPlayer.style.display = "block"; // Tampilkan video player
-    videoPlayer.load();          // Muat ulang video
-    videoPlayer.play();          // Putar otomatis
+        const fileURL = URL.createObjectURL(file); // Buat URL sementara
+        bg_vid.style.backgroundImage = "none";
+        setVideoSourceUrl(fileURL); 
     }
 });
 
