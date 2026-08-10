@@ -237,8 +237,10 @@ search_database.addEventListener('click', () => {
                 localStorage.setItem('activeWallpaper', urlWallpaper);
                 localStorage.setItem('activeWallpaperType', 'image');
             }
+        } else if(userInputWallpaper === null) {
+            alert(`Tidak ada Wallpaper yg di pilih`);
         } else {
-            alert(`Nomor ${userInputWallpaper} tidak ditemukan!`);
+            alert(`tidak ada wallpaper no: ${userInputWallpaper}`)
         }
     } else {
         alert("Belum ada wallpaper yang tersimpan di database!");
@@ -305,7 +307,6 @@ function addShortcut() {
         }
         if(url.trim() === "") {
             alert("url tidak boleh kosong!");
-            continue;
         }
         break;
     }

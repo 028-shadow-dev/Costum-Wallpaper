@@ -161,15 +161,18 @@ body {
 
 .shortcut-box {
     display: flex;
-    justify-content: space-between  ;
+    justify-content: end;
     padding-right: 1rem;
     /* background-color: rgba(162, 159, 159, 0.216); */
 }
+
 .shortcut-container{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: 1rem;
 }
+
 .shortcut {
     color: rgb(0, 0, 0);
     border: 1px solid black;
@@ -290,7 +293,6 @@ body {
     cursor: pointer;
 }
 
-
 /* media query */
 @media (max-width: 768px) {
     body {
@@ -301,6 +303,13 @@ body {
     .nav-box {
         flex-direction: column;
         align-items: center;
+        gap: 0.75rem;
+    }
+
+    .jam-box {
+        padding-left: 0;
+        align-items: center;
+        text-align: center;
     }
 
     .search-box {
@@ -316,19 +325,32 @@ body {
         min-width: 0;
     }
 
+    .search-bar {
+        width: min(100%, 320px);
+        flex: 1 1 220px;
+    }
+
+    .search-button {
+        width: auto;
+        min-width: 72px;
+        padding: 0 0.9rem;
+    }
+
     .shortcut-box {
         display: flex;
         justify-content: center;
         width: 100%;
         padding: 0 1rem;
         box-sizing: border-box;
+                align-items: center;
     }
 
     .shortcut-container {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
         justify-content: center;
+        align-items: center;
         gap: 5px;
         width: 100%;
         min-width: 0;
@@ -336,9 +358,10 @@ body {
 
     #shortcutlist {
         display: flex;
-        width: 100%;
+        width: 50%;
         gap: 5px;
         flex-wrap: wrap;
+        padding: 0px;
         justify-content: center;
         min-width: 0;
     }
@@ -348,6 +371,7 @@ body {
         max-width: 4rem;
         width: calc(20% - 8px);
         box-sizing: border-box;
+        border-radius: 12px;
     }
 
     .setting-ul-list {
@@ -357,7 +381,7 @@ body {
     .footer-box {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.75rem;
         margin-top: auto;
         width: 100%;
         min-width: 0;
@@ -377,40 +401,113 @@ body {
     .footer-midle,
     .footer-right {
         width: 100%;
-        min-width: 0;
         flex-wrap: wrap;
         justify-content: center;
         gap: 0.5rem;
+    }
+    
+    .footer-left .footer-button-search-database,
+    .footer-midle .footer-button,
+    .footer-right .footer-button-database,
+    .footer-setting .setting-ui {
+        width: 100%;
+        max-width: none;
+        border-radius: 0;
     }
 
     .footer-midle {
         width: 100%;
     }
+
+    .footer-input-container {
+        width: 100% !important;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .footer-input-container input,
+    .footer-input {
+        width: 100%;
+        max-width: none;
+        border-radius: 0;
+    }
 }
 
 @media (max-width: 480px) {
+    body {
+        background-position: center top;
+        background-attachment: scroll;
+    }
+
+    .nav-box {
+        gap: 0.75rem;
+        padding: 0.75rem 0.75rem 0;
+    }
+
+    .jam-box {
+        font-size: 0.95rem;
+        padding-left: 0;
+    }
+
     .search-bar {
-        min-width: 140px;
+        min-width: 0;
         width: 100%;
+        height: 42px;
+        padding: 0 0.9rem;
+        font-size: 0.95rem;
+        box-shadow: -3px 1.5px 0 rgba(8, 8, 8, 0.7);
+        border-radius: 0;
+        flex: 1 1 auto;
     }
 
     .search-box {
-        border-radius: 24px;
+        border-radius: 0;
+        margin: 1rem 0 1.25rem;
+        padding: 0.5rem;
+        gap: 0.5rem;
+        width: 100%;
+        max-width: none;
+        justify-content: stretch;
+        align-items: stretch;
+        flex-direction: column;
     }
+
+    .search-button {
+        width: 100%;
+        max-width: none;
+        height: 42px;
+        font-size: 0.9rem;
+        border-radius: 0;
+        flex: 1 1 auto;
+    }
+
+    .toggle-button-mode {
+        width: 38px;
+        height: 38px;
+    }
+
+    .shortcut-box {
+        padding: 0 0.5rem;
+    }
+
     .shortcut {
-        width: 2.7rem;
-        height: 2.7rem;
+        width: 2.9rem;
+        height: 2.9rem;
+        padding: 0.6rem;
+        border-radius: 10px;
     }
+
     .footer-box {
         margin-top: auto;
+        gap: 0.75rem;
     }
-    /* Kontainer Utama Footer */
-    #footerhide {
+
+    .footerhide {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         justify-content: center;
-        align-items: stretch;
         width: 100%;
         box-sizing: border-box;
         padding: 8px 6px;
@@ -423,7 +520,10 @@ body {
         flex-direction: column;
         gap: 5px;
         width: 100%;
+        border-radius: 0px;
+        margin: 0;
     }
+
     .footer-left,
     .footer-midle,
     .footer-right {
@@ -434,12 +534,13 @@ body {
         min-width: 0;
         width: 100%;
         gap: 5px;
+        border-radius: 0px;
+        margin: 0;
     }
 
-    /* Bagian Input teks (Middle) */
     .footer-midle {
-        flex-grow: 2;               /* Beri prioritas ruang lebih besar untuk input link */
-        min-width: 0;                
+        flex-grow: 2;
+        min-width: 0;
     }
 
     .footer-input {
@@ -447,9 +548,9 @@ body {
         min-width: 0;
         padding: 8px;
         font-size: 10px;
+        border-radius: 12px;
     }
 
-    /* Perbaikan CSS Tombol & Fix Koma Error */
     .footer-button,
     .footer-button-search-database,
     .footer-button-database,
@@ -458,11 +559,13 @@ body {
         padding: 8px 10px;
         white-space: normal;
         width: 100%;
+        max-width: none;
         min-width: 0;
         box-sizing: border-box;
+        border-radius: 0;
+        margin: 0;
     }
 
-    /* Mengatur list (UL) setting agar tetap sembunyi */
     .setting-ul-list {
         display: none;
     }
