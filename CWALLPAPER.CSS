@@ -203,11 +203,12 @@ body {
     padding-bottom: 20px;
 }
 .footer-setting {
-  display: flex;
-  flex-direction: column ; 
-  gap: 5px;                       
-  flex-shrink: 0;
-  align-self: center; 
+    display: flex;
+    flex-direction: column ; 
+    gap: 5px;                       
+    flex-shrink: 0;
+    width: 100px;
+    align-self: center; 
 }
 .setting-ui {
     display: flex;
@@ -380,7 +381,7 @@ body {
 
     .footer-box {
         display: flex;
-        flex-direction: column;
+        flex-direction:column-reverse;
         gap: 0.75rem;
         margin-top: auto;
         width: 100%;
@@ -395,6 +396,15 @@ body {
         box-sizing: border-box;
         flex-direction: column;
         display: flex;
+    }
+
+    .footer-setting {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+        border-radius: 0px;
+        margin: 0;
     }
 
     .footer-left,
