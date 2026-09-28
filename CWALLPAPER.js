@@ -103,11 +103,13 @@ btn_modecolor.addEventListener('click', () => {
         lightMode.style.backgroundColor = 'var(--warna-teks-2)';
         lightModeJam.style.color = 'var(--warna-teks-1)';
         ToDoList.style.color = 'var(--warna-teks-1)';
+        document.body.style.backgroundImage = 'none';
     } else {
         lightMode.style.color = 'var(--warna-teks-1)';
         lightMode.style.backgroundColor = 'var(--warna-teks-1)';
         lightModeJam.style.color = 'var(--warna-teks-2)';
         ToDoList.style.color = 'var(--warna-teks-2)';
+        document.body.style.backgroundImage = 'none';
     }
 })
 
