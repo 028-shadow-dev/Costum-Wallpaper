@@ -22,6 +22,7 @@ const inputLocalImage = document.getElementById('input-local-image');
 const videoSource = document.getElementById('videoSource');
 const videoInput = document.getElementById('videoInput');
 const videoPlayer = document.getElementById('myVideo');
+const search_icon = document.querySelector('.search-icon');
 
 
 let bgNoRefresh = localStorage.getItem('activeWallpaper');
@@ -152,6 +153,28 @@ setting_blur.addEventListener('click', () => {
     localStorage.setItem("settingBlur", blur_body)
 });
 
+
+search_icon.addEventListener('click', () => {
+    let image_body = document.getElementById('live-wallpaper');
+    
+    let currentBG = document.body.style.backgroundImage;
+    let targetBG = `url("${bgNoRefresh}")`;
+
+    if (currentBG === targetBG) {
+        document.body.style.backgroundImage = "none";
+        if (image_body) image_body.style.backgroundImage = "none"; 
+        
+        localStorage.setItem("settingColorBG", "none");
+    } else {
+        document.body.style.backgroundImage = targetBG;
+        if (image_body) image_body.style.backgroundImage = targetBG;
+         
+        localStorage.setItem("settingColorBG", targetBG);
+    }
+});
+
+
+
 setting_cover_fit.addEventListener('click', () => {
     let cover_fit = document.getElementById('live-wallpaper');
     if (cover_fit.style.backgroundSize === "cover") {
@@ -259,6 +282,11 @@ if (cover_setting) {
     document.body.style.backgroundSize = cover_setting;
 }
 
+let searchIcon = localStorage.getItem("settingBg");
+if(searchIcon){
+    document.body.style.backgroundImage = 'searchIcon';
+}
+
 btn_live_walllpaper.addEventListener('click',() => {
     let linkGambar = inputWallpaper.value.trim();
     let fileImageLocal = inputLocalImage && inputLocalImage.files && inputLocalImage.files[0];
@@ -330,7 +358,7 @@ function displayShortcuts() {
         container.innerHTML += `
         <br>
         <div class="shortcut-item" style="border-radius: 10px; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: black; border: 1px solid black; background: white; padding: 0.5rem;">
-            <a id="shortcut-link-${index}" href="${item.url}" target="_blank" rel="noopener noreferrer" style="margin: 0; padding: 0.5rem; color: black; text-decoration: none;">${item.name}</a>
+            <a id="shortcut-link-${index}" target="_self" href="${item.url}" target="_blank" rel="noopener noreferrer" style="margin: 0; padding: 0.5rem; color: black; text-decoration: none;">${item.name}</a>
             
             <button onclick="editshortcut(${item.key}, '${item.name}')" type="button" style="padding: 0.3rem 0.5rem;">Hapus</button>
         </div>
